@@ -1,23 +1,66 @@
-# 从 Claude Code 换到 Codex
+# Claude Code 配置：换电脑 / 换成 Codex
 
-同一台电脑上换成 Codex 时照这个做。只记「装了什么、从哪装」，不放本机文件。
+只记「装了什么、从哪装」，不放本机文件。
 
 更新于 2026-09-25。
 
-## 逐项怎么迁
+## 装了什么
 
-- **自己的 skill**：SKILL.md 格式是通用的，把 `~/.claude/skills/` 下的 13 个文件夹（`synced`、`learned` 除外）拷到 `~/.codex/skills/` 就能用。
-  来源：7 个动画/设计 skill 来自 [emilkowalski/skills](https://github.com/emilkowalski/skills)；design-md 照 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) 整理；另外 5 个（make-interfaces-feel-better、frontend-design-direction、accessibility、strategic-compact、liquid-glass-design）是从 ECC 里拷出来的。
+| 插件 | 来源（marketplace） | 状态 | 用来干什么 |
+|---|---|---|---|
+| oh-my-claudecode（OMC） | [Yeachan-Heo/oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | 启用 | agent 分工（executor、code-reviewer）、HUD 状态栏、ai-slop-cleaner |
+| superpowers | 官方 `claude-plugins-official` | 启用 | brainstorming、systematic-debugging、写计划 / 执行计划 |
+| ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 启用 | 只写需要的代码，能少写就少写 |
+| taste-skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 启用 | 前端设计：redesign、taste、minimalist |
+| swift-lsp | 官方 `claude-plugins-official` | 启用 | Swift 跳转 / 诊断（iOS 项目用） |
+| ECC | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | **停用** | 284 个 skill 加一大堆钩子，太重；常用的 5 个 skill 单独拷出来了 |
+
+自己加的 skill（`~/.claude/skills/`，13 个）：
+
+| skill | 来源 |
+|---|---|
+| animation-vocabulary、apple-design、emil-design-eng、find-animation-opportunities、improve-animations、pick-ui-library、review-animations | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
+| make-interfaces-feel-better、frontend-design-direction、accessibility、strategic-compact、liquid-glass-design | ECC 的 `skills/` 目录 |
+| design-md | 照 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) 整理的（74 个大厂的 DESIGN.md） |
+
+docx、pdf、pptx、xlsx、skill-creator，以及 `skills/synced` 里的，都跟着 claude.ai 账号走，登录就有。
+
+## 一、换电脑（还用 Claude Code）
+
+1. 装插件（每行分开跑）：
+
+   ```bash
+   claude plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode.git
+   claude plugin marketplace add https://github.com/Leonxlnx/taste-skill.git
+   claude plugin marketplace add DietrichGebert/ponytail
+   claude plugin marketplace add https://github.com/affaan-m/everything-claude-code.git
+   claude plugin install oh-my-claudecode@omc
+   claude plugin install superpowers@claude-plugins-official
+   claude plugin install swift-lsp@claude-plugins-official
+   claude plugin install taste-skill@taste-skill
+   claude plugin install ponytail@ponytail
+   claude plugin install ecc@ecc
+   claude plugin disable ecc@ecc
+   ```
+
+2. 在 Claude Code 里跑一次 `/oh-my-claudecode:omc-setup`，它会写好全局 `CLAUDE.md` 和 HUD 状态栏。
+3. `~/.claude/settings.json` 里补两项：`"effortLevel": "high"`，`"env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" }`（OMC 的 team 功能要用）。
+4. 自己的 skill：旧电脑还在的话，把旧电脑的 `~/.claude/skills/` 整个拷过来（`synced`、`learned` 不用拷）。旧电脑没了就按来源重装：
+   - emilkowalski 那 7 个：`npx skills@latest add emilkowalski/skills`，勾这 7 个
+   - ECC 那 5 个：第 1 步装好 ECC 后，从 `~/.claude/plugins/cache/ecc/ecc/<版本>/skills/` 把这 5 个文件夹拷到 `~/.claude/skills/`
+   - design-md：让 Claude 按 awesome-design-md 仓库重新做一份
+
+## 二、换成 Codex（同一台电脑）
+
+- **自己的 skill**：SKILL.md 格式是通用的，把 `~/.claude/skills/` 下的 13 个文件夹拷到 `~/.codex/skills/` 就能用。
 - **superpowers**：有官方 Codex 版，直接装。
 - **ponytail**：有 Codex 版，直接装。
-- **ECC**（[affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)）：有官方 Codex 版，可以直接装。在 Claude Code 里是停用的（284 个 skill 加一大堆钩子，太重），常用的 5 个 skill 已经在上面第一条里跟着拷过去了，所以 Codex 上一般不用装整个 ECC。
-- **taste-skill**：没有 Codex 插件包，但它本身就是一堆 SKILL.md，把 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) 的 `skills/` 下的文件夹拷进 `~/.codex/skills/` 就能用。
+- **ECC**：有官方 Codex 版，可以直接装。常用的 5 个 skill 已经跟着第一条拷过去了，所以一般不用装整个 ECC。
+- **taste-skill**：没有 Codex 插件包，但它本身就是一堆 SKILL.md，把仓库 `skills/` 下的文件夹拷进 `~/.codex/skills/` 就能用。
 - **OMC**：只能在 Claude Code 里用。同一个作者做了 Codex 版 [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex)（OmX），功能类似（钩子、agent 团队、HUD），但是另一个项目，得重新配。
 - **swift-lsp**：Claude Code 专用，不用迁。
 - **全局规则**：Codex 读的是 `~/.codex/AGENTS.md`。`~/.claude/CLAUDE.md` 里 OMC 那一大段是给 Claude Code 编排 agent 用的，不要照搬，只挑通用的偏好写进去，比如用中文交流。
 - **自动模式规则、状态栏、ECC 钩子**：Codex 没有对应的东西，不迁。
-
-## 命令
 
 ```bash
 mkdir -p ~/.codex/skills
