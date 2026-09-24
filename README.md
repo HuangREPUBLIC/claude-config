@@ -14,13 +14,14 @@
 | taste-skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 启用 | 前端设计：redesign、taste、minimalist |
 | ECC | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | **停用** | 284 个 skill 加一大堆钩子，太重；常用的 5 个 skill 单独拷出来了 |
 
-自己加的 skill：本仓库 `skills/` 下 13 个，跟本机 `~/.claude/skills/` 一样（`synced`、`learned` 不算）。
+自己加的 skill：本仓库 `skills/` 下 15 个，跟本机 `~/.claude/skills/` 一样（`synced`、`learned` 不算）。
 
 | skill | 来源（以后想更新时去这里拿） |
 |---|---|
 | animation-vocabulary、apple-design、emil-design-eng、find-animation-opportunities、improve-animations、pick-ui-library、review-animations | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
 | make-interfaces-feel-better、frontend-design-direction、accessibility、strategic-compact、liquid-glass-design | ECC 的 `skills/` 目录 |
 | design-md | 照 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) 整理的（74 个大厂的 DESIGN.md） |
+| grill-me、grilling | [mattpocock/skills](https://github.com/mattpocock/skills) 的 `skills/productivity/`（只挑了这两个，没装整套）。动手前输入 `/grill-me`，让 AI 一轮轮盘问方案，每题带推荐答案 |
 
 docx、pdf、pptx、xlsx、skill-creator，以及 `skills/synced` 里的，都跟着 claude.ai 账号走，登录就有。
 
@@ -57,7 +58,7 @@ rsync -a --delete --exclude synced --exclude learned --exclude .DS_Store ~/.clau
 
 ## 二、换成 Codex
 
-- **自己的 skill**：SKILL.md 格式是通用的，把本仓库 `skills/` 下的 13 个文件夹拷到 `~/.codex/skills/` 就能用。
+- **自己的 skill**：SKILL.md 格式是通用的，把本仓库 `skills/` 下的 15 个文件夹拷到 `~/.codex/skills/` 就能用。
 - **superpowers**：有官方 Codex 版，直接装。
 - **ponytail**：有 Codex 版，直接装。
 - **ECC**：有官方 Codex 版，可以直接装。常用的 5 个 skill 已经跟着第一条拷过去了，所以一般不用装整个 ECC。
