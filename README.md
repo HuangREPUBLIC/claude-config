@@ -2,7 +2,7 @@
 
 记「装了什么、从哪装」。自己加的 skill 直接放在本仓库的 `skills/` 里，其余都从网上装。
 
-更新于 2026-11-19。插件版本：OMC 5.8.6、ponytail 5.3.3、taste-skill 2.5.1、ECC 2.2.3（停用）。
+更新于 2026-11-19。插件版本：OMC 5.8.4（固定版本，见下）、ponytail 5.3.3、taste-skill 2.5.1、ECC 2.2.3（停用）。
 
 ## 装了什么
 
@@ -62,6 +62,8 @@ rsync -a --delete --exclude .DS_Store ~/.claude/agents/ agents/
    claude plugin install ecc@ecc
    claude plugin disable ecc@ecc
    ```
+
+   OMC 的插件来源默认跟着 GitHub 的 main 分支走，main 上可能是没正式发布的版本（2026-11 的 5.8.6 就缺了 `bridge/*.cjs` 和 `dist/`，见 [#5027](https://github.com/Yeachan-Heo/oh-my-claudecode/issues/5027)）。所以固定到正式发布的版本：在 `~/.claude/settings.json` 的 `extraKnownMarketplaces.omc.source` 里加 `"ref": "v5.8.4"`（`~/.claude/plugins/known_marketplaces.json` 里同一项也加），再跑 `claude plugin marketplace update omc`，然后卸载重装 OMC。以后要升级，先到 [Releases](https://github.com/Yeachan-Heo/oh-my-claudecode/releases) 确认新版本已经正式发布，再改这个 `ref`。
 
 2. 在 Claude Code 里跑一次 `/oh-my-claudecode:omc-setup`，它会写好全局 `CLAUDE.md` 和 HUD 状态栏。
 3. `~/.claude/settings.json` 里补两项：`"effortLevel": "high"`，`"env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" }`（OMC 的 team 功能要用）。
